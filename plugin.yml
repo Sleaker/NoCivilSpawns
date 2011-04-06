@@ -1,3 +1,3 @@
-name: LimitSpawns
+name: NoCivilSpawns
 main: com.sleaker.NoCivilSpawns.NoCivilSpawns
 version: 1.2
