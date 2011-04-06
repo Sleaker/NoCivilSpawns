@@ -28,19 +28,19 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener{
 		if (allowSpawn) {
 			spawner = !testCuboid(1, 5, 5, spawnerid, spawnblock.getLocation());
 			//if (spawner)
-				//LimitSpawns.log.info("[LimitSpawns] - Spawner Detected - Allowing Spawn");
+				//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
 		}
 		
 		//Test to make sure we aren't spawning on a tree or too close to one. for sure (wood blocks.)
 		if (allowSpawn && !spawner) {
 			allowSpawn = testCuboid(4, 5, -2, treeids, spawnblock.getLocation());
 			//if (!allowSpawn)
-				//LimitSpawns.log.info("[LimitSpawns] - Canceled Spawn - Attempted Tree Spawn");
+				//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Attempted Tree Spawn");
 		}
 		if (allowSpawn && !spawner) {
 			allowSpawn = testCuboid(15, 20, 5, blacklistids, spawnblock.getLocation());
 			//if (!allowSpawn)
-				//LimitSpawns.log.info("[LimitSpawns] - Canceled Spawn - Too close to civilization");
+				//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Too close to civilization");
 		}
 			
 		if (!allowSpawn && !spawner) {

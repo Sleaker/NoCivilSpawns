@@ -26,6 +26,6 @@ public class NoCivilSpawns extends JavaPlugin{
         //Get the infomation from the plugin.yml file.
         PluginDescriptionFile pdfFile = this.getDescription();
         //Print that the plugin has been enabled!
-        log.info("[LimitSpawns] version " + pdfFile.getVersion() + " by lonelydime & updated by Sleaker is enabled!");
+        log.info("[NoCivilSpawns] version " + pdfFile.getVersion() + " by Sleaker is enabled!");
 	}
 }
