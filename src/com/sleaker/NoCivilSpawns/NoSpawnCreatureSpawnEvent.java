@@ -15,15 +15,13 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener{
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
 		
 		int[] treeids = {17, 18};
-		int[] blacklistids = {4, 44, 45, 64, 67, 85};
+		int[] blacklistids = {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85};
 		int[] spawnerid = {52};
 		boolean spawner = false;
 		boolean allowSpawn = true;
 		//gets the block at the location of spawn
 		Block spawnblock = event.getEntity().getWorld().getBlockAt(event.getLocation().getBlockX(), event.getLocation().getBlockY()-1, event.getLocation().getBlockZ());
 		
-		
-
 		
 		if (allowSpawn) {
 			spawner = !testCuboid(1, 5, 5, spawnerid, spawnblock.getLocation());

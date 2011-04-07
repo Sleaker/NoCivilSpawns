@@ -1,0 +1,12 @@
+1.2.1
+Added WoodPlank, Glass, Wool, Chest, and Furnace to the blacklist. This should prevent creatures spawning in wood buildings nows.
+
+1.2
+Fixed old references to LimitSpawn.  Plugin should now refer to itself properly!
+
+1.1
+Fixed Names
+
+1.0
+Renamed Project - Fork of LimitSpawn base setup -
+Added Cuboid Selection and initial Logic to test for areas we don't want monsters spawning in
