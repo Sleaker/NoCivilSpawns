@@ -1,77 +1,83 @@
 package com.sleaker.NoCivilSpawns;
 
+/**
+ * A plugin for detecting spawns near pre-defined blockIDs
+ *
+ * @author Sleaker
+ *
+ */
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.bukkit.World;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityListener;
 
-public class NoSpawnCreatureSpawnEvent extends EntityListener{
-	public static NoCivilSpawns plugin;
-	
+
+public class NoSpawnCreatureSpawnEvent extends EntityListener {
+	public final NoCivilSpawns plugin;
+	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85} );
+	private static final Set<Integer> treeIds = makeSet( new int[] {17, 18} );
+	private static final Set<Integer> spawnerId = makeSet( new int[] {52} );
+
+	private static final Set<Integer> makeSet(final int[] array) {
+		Set<Integer> set = new HashSet<Integer>();
+		for (int i : array) {
+			set.add(i);
+		}
+		return set;
+	}
+
 	public NoSpawnCreatureSpawnEvent(NoCivilSpawns instance) {
-        plugin = instance;
-    }
-	
+		plugin = instance;
+	}
+
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
-		
-		int[] treeids = {17, 18};
-		int[] blacklistids = {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85};
-		int[] spawnerid = {52};
-		boolean spawner = false;
-		boolean allowSpawn = true;
 		//gets the block at the location of spawn
-		Block spawnblock = event.getEntity().getWorld().getBlockAt(event.getLocation().getBlockX(), event.getLocation().getBlockY()-1, event.getLocation().getBlockZ());
-		
-		
-		if (allowSpawn) {
-			spawner = !testCuboid(1, 5, 5, spawnerid, spawnblock.getLocation());
-			//if (spawner)
-				//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
+		Location spawnLocation = event.getLocation();
+
+		if (testCuboid(1, 2, -1, 4, spawnerId, spawnLocation)) {
+			//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
+			return;
 		}
-		
+
 		//Test to make sure we aren't spawning on a tree or too close to one. for sure (wood blocks.)
-		if (allowSpawn && !spawner) {
-			allowSpawn = testCuboid(4, 5, -2, treeids, spawnblock.getLocation());
-			//if (!allowSpawn)
-				//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Attempted Tree Spawn");
-		}
-		if (allowSpawn && !spawner) {
-			allowSpawn = testCuboid(15, 20, 5, blacklistids, spawnblock.getLocation());
-			//if (!allowSpawn)
-				//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Too close to civilization");
-		}
-			
-		if (!allowSpawn && !spawner) {
+		if (testCuboid(4, 2, -2, 0, treeIds, spawnLocation)) {
+			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Attempted Tree Spawn");
 			event.setCancelled(true);
+			return;
+		}
+		
+		if (testCuboid(15, 10, -2, 3, blacklistIds, spawnLocation)) {
+			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Too close to civilization");
+			event.setCancelled(true);
+			return;
 		}
 	}
 
-	
-	public boolean testCuboid(int max, int sizeX, int sizeY, int[] blockids, Location blockloc) {
-		int count = 0;
-		boolean countUp = true;
-		if (sizeY < 0) {
-			countUp = false;
-			sizeY = -sizeY;
-		}
-		for (int i = 0; i < sizeY; i++)
-			for (int j = 0; j < sizeX; j++)
-				for (int k = 0; k < sizeX; k++) {
-					for (int l = 0; l < blockids.length; l++) {
-						
-						if (countUp) 
-							if ( blockids[l] == blockloc.getWorld().getBlockAt(blockloc.getBlockX() + j, blockloc.getBlockY() + i, blockloc.getBlockZ() + k).getTypeId() )
-							count++;
-						
-						if (!countUp)
-							if ( blockids[l] == blockloc.getWorld().getBlockAt(blockloc.getBlockX() + j, blockloc.getBlockY() - i, blockloc.getBlockZ() + k).getTypeId() )
-								count++;
-						
-					}
-					if (count >= max)
-						return false;
-				}
+
+	public static final boolean testCuboid(int max, int radius, int minY, int maxY, Set<Integer> blockIds, Location blockloc) {
+		final World world = blockloc.getWorld();
+		final int blockX = blockloc.getBlockX();
+		final int blockY = blockloc.getBlockY();
+		final int blockZ = blockloc.getBlockZ();
 		
-		return true;
+		int count = 0;
+		for (int y = blockY+minY; y <= blockY+maxY; y++) {
+			for (int x = blockX-radius; x <= blockX+radius; x++) {
+				for (int z = blockZ-radius; z <= blockZ+radius; z++) {
+					final int blockId = world.getBlockTypeIdAt(x, y, z);
+					if (blockIds.contains(blockId)) {
+						count++;
+						if (count >= max)
+							return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 }

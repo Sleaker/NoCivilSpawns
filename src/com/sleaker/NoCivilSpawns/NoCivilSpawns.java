@@ -1,5 +1,11 @@
 package com.sleaker.NoCivilSpawns;
 
+/**
+ * A plugin for detecting spawns near pre-defined blockIDs
+ *
+ * @author Sleaker
+ *
+ */
 import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
