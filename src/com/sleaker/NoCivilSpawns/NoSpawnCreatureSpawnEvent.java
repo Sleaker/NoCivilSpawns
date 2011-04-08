@@ -18,6 +18,7 @@ import org.bukkit.event.entity.EntityListener;
 
 public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	public final NoCivilSpawns plugin;
+	private static final Set<Integer> blockedIds = makeSet ( new int[] {4, 5, 20, 45} );
 	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85} );
 	private static final Set<Integer> treeIds = makeSet( new int[] {17, 18} );
 	private static final Set<Integer> spawnerId = makeSet( new int[] {52} );
@@ -42,7 +43,12 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 			//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
 			return;
 		}
-
+			
+		// Check to see if we are spawning directly on one of these blocks, if we are, then abort.
+		if (testCuboid(1, 1, -1, -1, blockedIds, spawnLocation)) {
+			event.setCancelled(true);
+			return;
+		}
 		//Test to make sure we aren't spawning on a tree or too close to one. for sure (wood blocks.)
 		if (testCuboid(4, 2, -2, 0, treeIds, spawnLocation)) {
 			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Attempted Tree Spawn");
