@@ -39,7 +39,8 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
 
-		if (testCuboid(1, 2, -1, 4, spawnerId, spawnLocation)) {
+		// Checks for a spawner in a 9x9x3 cuboid
+		if (testCuboid(1, 4, 0, 3, spawnerId, spawnLocation)) {
 			//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
 			return;
 		}
