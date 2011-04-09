@@ -21,7 +21,7 @@ public class NoCivilSpawns extends JavaPlugin{
 	private final NoSpawnCreatureSpawnEvent spawnListener = new NoSpawnCreatureSpawnEvent(this);
 	static final Boolean quick = true;
 	static final Boolean goldBlocker = false;
-	static final Boolean daimondEnabler = false;
+	static final Boolean diamondEnabler = false;
 	static final String plugName = "[NoCivilSpawns]";
 	private Configuration config;
 	
@@ -62,8 +62,8 @@ public class NoCivilSpawns extends JavaPlugin{
         	log.info(plugName + " - Additional quick-detection method enabled.");
         if ( config.getBoolean("goldblocker", goldBlocker) )
         	log.info(plugName + " - Gold Blocks will prevent mobs from spawning nearby.");
-        if ( config.getBoolean("daimondenabler", daimondEnabler) )
-        	log.info(plugName + " - Daimond blocks will always allow mobs to spawn.");       
+        if ( config.getBoolean("diamondenabler", diamondEnabler) )
+        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn.");       
         
 		//Create the pluginmanager pm.
 		PluginManager pm = getServer().getPluginManager();

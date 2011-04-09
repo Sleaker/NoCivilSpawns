@@ -40,7 +40,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
 		
-		if ( NoCivilSpawns.daimondEnabler )
+		if ( NoCivilSpawns.diamondEnabler )
 			spawnOkIds.add(57);
 		
 		// Checks for a spawner in a 9x9x3 cuboid
