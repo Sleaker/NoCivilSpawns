@@ -21,7 +21,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	private static final Set<Integer> blockedIds = makeSet ( new int[] {4, 5, 20, 45} );
 	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85} );
 	private static final Set<Integer> treeIds = makeSet( new int[] {17, 18} );
-	private static final Set<Integer> spawnerId = makeSet( new int[] {52} );
+	private static final Set<Integer> spawnOkIds = makeSet( new int[] {52} );
 
 	private static final Set<Integer> makeSet(final int[] array) {
 		Set<Integer> set = new HashSet<Integer>();
@@ -38,25 +38,35 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
-
+		
+		if ( NoCivilSpawns.daimondEnabler )
+			spawnOkIds.add(57);
+		
 		// Checks for a spawner in a 9x9x3 cuboid
-		if (testCuboid(1, 4, 0, 3, spawnerId, spawnLocation)) {
+		if (testCuboid(1, 4, 0, 3, spawnOkIds, spawnLocation)) {
 			//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
 			return;
 		}
-			
-		// Check to see if we are spawning directly on one of these blocks, if we are, then abort.
-		if (testCuboid(1, 1, -1, -1, blockedIds, spawnLocation)) {
-			event.setCancelled(true);
-			return;
+
+		if (NoCivilSpawns.goldBlocker) {
+			blockedIds.add(41);
+			blacklistIds.add(41);
 		}
+		
+		// Check to see if we are spawning directly on one of these blocks, if we are, then abort.
+		if (NoCivilSpawns.quick)
+			if (testCuboid(1, 1, -1, -1, blockedIds, spawnLocation)) {
+				event.setCancelled(true);
+				return;
+			}
+		
 		//Test to make sure we aren't spawning on a tree or too close to one. for sure (wood blocks.)
 		if (testCuboid(4, 2, -2, 0, treeIds, spawnLocation)) {
 			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Attempted Tree Spawn");
 			event.setCancelled(true);
 			return;
 		}
-		
+
 		if (testCuboid(15, 10, -2, 3, blacklistIds, spawnLocation)) {
 			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Too close to civilization");
 			event.setCancelled(true);
@@ -70,7 +80,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		final int blockX = blockloc.getBlockX();
 		final int blockY = blockloc.getBlockY();
 		final int blockZ = blockloc.getBlockZ();
-		
+
 		int count = 0;
 		for (int y = blockY+minY; y <= blockY+maxY; y++) {
 			for (int x = blockX-radius; x <= blockX+radius; x++) {
