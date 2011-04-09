@@ -22,6 +22,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85} );
 	private static final Set<Integer> treeIds = makeSet( new int[] {17, 18} );
 	private static final Set<Integer> spawnOkIds = makeSet( new int[] {52} );
+	private static final int goldId = 41;
 
 	private static final Set<Integer> makeSet(final int[] array) {
 		Set<Integer> set = new HashSet<Integer>();
@@ -44,14 +45,13 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		
 		// Checks for a spawner in a 9x9x3 cuboid
 		if (testCuboid(1, 4, 0, 3, spawnOkIds, spawnLocation)) {
-			//LimitSpawns.log.info("[NoCivilSpawns] - Spawner Detected - Allowing Spawn");
+			//NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Spawner Detected - Allowing Spawn");
 			return;
 		}
 
-		if (NoCivilSpawns.goldBlocker) {
-			blockedIds.add(41);
-			blacklistIds.add(41);
-		}
+		if (NoCivilSpawns.goldBlocker) 
+			blockedIds.add(goldId);
+		
 		
 		// Check to see if we are spawning directly on one of these blocks, if we are, then abort.
 		if (NoCivilSpawns.quick)
@@ -62,13 +62,13 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		
 		//Test to make sure we aren't spawning on a tree or too close to one. for sure (wood blocks.)
 		if (testCuboid(4, 2, -2, 0, treeIds, spawnLocation)) {
-			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Attempted Tree Spawn");
+			//NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Canceled Spawn - Attempted Tree Spawn");
 			event.setCancelled(true);
 			return;
 		}
 
 		if (testCuboid(15, 10, -2, 3, blacklistIds, spawnLocation)) {
-			//LimitSpawns.log.info("[NoCivilSpawns] - Canceled Spawn - Too close to civilization");
+			//NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Canceled Spawn - Too close to civilization");
 			event.setCancelled(true);
 			return;
 		}
@@ -91,6 +91,8 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 						if (count >= max)
 							return true;
 					}
+					if (NoCivilSpawns.goldBlocker && blockId == goldId)
+						return true;
 				}
 			}
 		}

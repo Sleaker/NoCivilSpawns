@@ -22,17 +22,20 @@ public class NoCivilSpawns extends JavaPlugin{
 	static final Boolean quick = true;
 	static final Boolean goldBlocker = false;
 	static final Boolean daimondEnabler = false;
+	static final String plugName = "[NoCivilSpawns]";
 	private Configuration config;
-	//static Map<String, List<Boolean>> options = new HashMap<String, List<Boolean>>();
-	//private List<String> options;
+	
 	public static Logger log = Logger.getLogger("Minecraft");
 
 	public void onDisable() {
-		log.info("[NoCivilSpawns] Disabled");
+		log.info(plugName + " Disabled");
 	}
 
 	public void onEnable() {
+		//Get the infomation from the plugin.yml file.
+		PluginDescriptionFile pdfFile = this.getDescription();
 		
+		//Check to see if there is a configuration file.
 		File yml = new File(getDataFolder()+"/config.yml");
 		
         if (!yml.exists()) {
@@ -41,31 +44,34 @@ public class NoCivilSpawns extends JavaPlugin{
     	    	yml.createNewFile();
     	    }
     	    catch (IOException ex) {
-    	    	System.out.println("[NoCivilSpawns] - Cannot create configuration file. And none to load, using defaults.");
+    	    	log.info(plugName + " - Cannot create configuration file. And none to load, using defaults.");
     	    }
         }	
-
-        config = getConfiguration();
         
+        
+        config = getConfiguration();
+      //Attempt to load in the configuration file.
         if ( config.getKeys(null).isEmpty() ) {
         	config.setProperty("quicktest", true);
         	config.setProperty("goldblocker", false);
         	config.setProperty("daimondenabler", false);
+        	log.info(plugName + " - No configuration file found. Generating defaults.");
         	config.save();
         }
-        config.getBoolean("quicktest", quick);
-        config.getBoolean("goldblocker", goldBlocker);
-        config.getBoolean("daimondenabler", daimondEnabler);
-        
+        if ( config.getBoolean("quicktest", quick) )
+        	log.info(plugName + " - Additional quick-detection method enabled.");
+        if ( config.getBoolean("goldblocker", goldBlocker) )
+        	log.info(plugName + " - Gold Blocks will prevent mobs from spawning nearby.");
+        if ( config.getBoolean("daimondenabler", daimondEnabler) )
+        	log.info(plugName + " - Daimond blocks will always allow mobs to spawn.");       
         
 		//Create the pluginmanager pm.
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CREATURE_SPAWN, spawnListener, Priority.Normal, this);
 
-		//Get the infomation from the plugin.yml file.
-		PluginDescriptionFile pdfFile = this.getDescription();
-		//Print that the plugin has been enabled!
-		log.info("[NoCivilSpawns] version " + pdfFile.getVersion() + " by Sleaker is enabled!");
+
+		//Print that the plugin was successfully enabled!
+		log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
 
 
 	}
