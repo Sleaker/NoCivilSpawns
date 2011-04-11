@@ -19,10 +19,11 @@ import org.bukkit.event.entity.EntityListener;
 public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	public final NoCivilSpawns plugin;
 	private static final Set<Integer> blockedIds = makeSet ( new int[] {4, 5, 20, 45} );
-	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 35, 44, 45, 54, 62, 64, 65, 67, 85} );
+	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 35, 43, 44, 45, 54, 62, 64, 65, 67, 85} );
 	private static final Set<Integer> treeIds = makeSet( new int[] {17, 18} );
 	private static final Set<Integer> spawnOkIds = makeSet( new int[] {52} );
 	private static final int goldId = 41;
+	private static final int ironId = 42;
 
 
 	private static final Set<Integer> makeSet(final int[] array) {
@@ -105,6 +106,8 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 							return true;
 					}
 					if (NoCivilSpawns.goldBlocker && blockId == goldId)
+						return true;
+					if (NoCivilSpawns.ironBlocker && blockId == ironId )
 						return true;
 				}
 			}

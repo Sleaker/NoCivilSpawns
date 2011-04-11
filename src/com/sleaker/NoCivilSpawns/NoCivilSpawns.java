@@ -26,6 +26,7 @@ public class NoCivilSpawns extends JavaPlugin{
 	private final NoSpawnCreatureSpawnEvent spawnListener = new NoSpawnCreatureSpawnEvent(this);
 	static final Boolean quick = true;
 	static final Boolean goldBlocker = false;
+	static final Boolean ironBlocker = false;
 	static final Boolean diamondEnabler = false;
 	static final Boolean monstersonly = false;
 	static final String plugName = "[NoCivilSpawns]";
@@ -65,6 +66,7 @@ public class NoCivilSpawns extends JavaPlugin{
         if ( config.getKeys(null).isEmpty() ) {
         	config.setProperty("quicktest", true);
         	config.setProperty("goldblocker", false);
+        	config.setProperty("ironblocker", false);
         	config.setProperty("diamondenabler", false);
         	config.setProperty("monstersonly", false);
         	config.setProperty("whitelistmobs", null);
@@ -76,6 +78,8 @@ public class NoCivilSpawns extends JavaPlugin{
         	log.info(plugName + " - Additional quick-detection method enabled.");
         if ( config.getBoolean("goldblocker", goldBlocker) )
         	log.info(plugName + " - Gold Blocks will prevent mobs from spawning nearby.");
+        if (config.getBoolean("ironblocker", ironBlocker) )
+        	log.info(plugName + " - Iron Blocks will prevent mobs from spawning nearby.");
         if ( config.getBoolean("diamondenabler", diamondEnabler) )
         	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");
         if ( config.getBoolean("monstersonly", true))
