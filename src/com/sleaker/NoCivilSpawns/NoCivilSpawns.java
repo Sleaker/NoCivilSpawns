@@ -8,7 +8,9 @@ package com.sleaker.NoCivilSpawns;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
@@ -24,9 +26,11 @@ public class NoCivilSpawns extends JavaPlugin{
 	static final Boolean goldBlocker = false;
 	static final Boolean diamondEnabler = false;
 	static final String plugName = "[NoCivilSpawns]";
-	static List<String> whitelist;
-	static List<String> blacklist;
+	private static List<String> whitelist;
+	private static List<String> blacklist;
 	private Configuration config;
+	static Set<String> whitelistmobs = new HashSet<String>(); 
+	static Set<String> blacklistmobs = new HashSet<String>();
 	
 	public static Logger log = Logger.getLogger("Minecraft");
 
@@ -68,12 +72,19 @@ public class NoCivilSpawns extends JavaPlugin{
         if ( config.getBoolean("goldblocker", goldBlocker) )
         	log.info(plugName + " - Gold Blocks will prevent mobs from spawning nearby.");
         if ( config.getBoolean("diamondenabler", diamondEnabler) )
-        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");       
-        if ( config.getStringList("whitelistmobs", whitelist) != null )
-        	log.info(plugName + " - Imported mob whitelist");       
-        if ( config.getStringList("blacklistmobs", blacklist) != null )
-        	log.info(plugName + " - Imported mob blacklist");
+        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");  
         
+        whitelistmobs.addAll(config.getStringList("whitelistmobs", whitelist));
+        if ( whitelistmobs.size() > 0 ) {
+        	log.info(plugName + " - Imported mob whitelist"); 
+        } 
+        
+        blacklistmobs.addAll(config.getStringList("blacklistmobs", blacklist));
+        if ( blacklistmobs.size() > 0 ){
+        	log.info(plugName + " - Imported mob blacklist");
+        } 
+        
+    	
 		//Create the pluginmanager pm.
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CREATURE_SPAWN, spawnListener, Priority.Normal, this);

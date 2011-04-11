@@ -23,8 +23,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	private static final Set<Integer> treeIds = makeSet( new int[] {17, 18} );
 	private static final Set<Integer> spawnOkIds = makeSet( new int[] {52} );
 	private static final int goldId = 41;
-	private static final Set<String> whitelistmobs = new HashSet<String> ( NoCivilSpawns.whitelist );
-	private static final Set<String> blacklistmobs = new HashSet<String> ( NoCivilSpawns.blacklist );
+
 
 	private static final Set<Integer> makeSet(final int[] array) {
 		Set<Integer> set = new HashSet<Integer>();
@@ -43,10 +42,10 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
 		
-		if (whitelistmobs.contains(event.getCreatureType()) )
+		if (NoCivilSpawns.whitelistmobs.contains(event.getCreatureType()) )
 			return;
 		
-		if (blacklistmobs.contains(event.getCreatureType()) ) {
+		if (NoCivilSpawns.blacklistmobs.contains(event.getCreatureType()) ) {
 			event.setCancelled(true);
 			return;
 		}
