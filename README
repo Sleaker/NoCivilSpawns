@@ -1,9 +1,24 @@
-NoCivilSpawn for CraftBukkit 617
+NoCivilSpawns for CraftBukkit 670
 	- By Sleaker
 
-Version 1.3.0
+Version 1.3.1
 
 Features:
  Prevents creatures from spawning in Civilized areas such as towns, and on top of trees
  
+Installation:
+ Just move the NoCivilSpawns.jar to your plugin directory.
+ Load the game once to generate a config file found at /NoCivilSpawns/config.yml
  
+ 
+Configuration Example:
+
+diamondenabler: true/false - Enables diamond blocks to act like mob spawners during block detection.
+goldblocker: true/false - Enables immediate cancelation if one gold block is found during quick/long tests.
+quicktest: true/false - Enables 1 block radius quick test that will cancel the spawn if the creature is attempting to spawn on cobble, woodplank, glass, or brick.
+whitelist:
+    - Wolf
+blacklist:
+    - Pig
+    - Chicken
+
