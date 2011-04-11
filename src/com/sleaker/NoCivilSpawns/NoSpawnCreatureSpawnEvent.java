@@ -32,24 +32,31 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		}
 		return set;
 	}
-
+	
 	public NoSpawnCreatureSpawnEvent(NoCivilSpawns instance) {
 		plugin = instance;
 	}
 
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
-			
+
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
 		
-		if (NoCivilSpawns.whitelistmobs.contains(event.getCreatureType()) )
+	
+		if (NoCivilSpawns.monstersonly && !event.getCreatureType().toString().equals("MONSTER") ) 
 			return;
 		
-		if (NoCivilSpawns.blacklistmobs.contains(event.getCreatureType()) ) {
+		if (NoCivilSpawns.whitelistmobs.contains(event.getCreatureType().toString()) )
+			return;
+		
+		if (NoCivilSpawns.blacklistmobs.contains(event.getCreatureType().toString()) ) {
 			event.setCancelled(true);
 			return;
 		}
 				
+
+
+			
 		if ( NoCivilSpawns.diamondEnabler )
 			spawnOkIds.add(57);
 		
