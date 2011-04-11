@@ -25,6 +25,7 @@ public class NoCivilSpawns extends JavaPlugin{
 	static final Boolean quick = true;
 	static final Boolean goldBlocker = false;
 	static final Boolean diamondEnabler = false;
+	static final Boolean monstersonly = false;
 	static final String plugName = "[NoCivilSpawns]";
 	private static List<String> whitelist;
 	private static List<String> blacklist;
@@ -39,7 +40,7 @@ public class NoCivilSpawns extends JavaPlugin{
 	}
 
 	public void onEnable() {
-		//Get the infomation from the plugin.yml file.
+		//Get the information from the plugin.yml file.
 		PluginDescriptionFile pdfFile = this.getDescription();
 		
 		//Check to see if there is a configuration file.
@@ -61,7 +62,8 @@ public class NoCivilSpawns extends JavaPlugin{
         if ( config.getKeys(null).isEmpty() ) {
         	config.setProperty("quicktest", true);
         	config.setProperty("goldblocker", false);
-        	config.setProperty("daimondenabler", false);
+        	config.setProperty("diamondenabler", false);
+        	config.setProperty("monstersonly", false);
         	config.setProperty("whitelistmobs", null);
         	config.setProperty("blacklistmobs", null);
         	log.info(plugName + " - No configuration file found. Generating defaults.");
@@ -72,16 +74,18 @@ public class NoCivilSpawns extends JavaPlugin{
         if ( config.getBoolean("goldblocker", goldBlocker) )
         	log.info(plugName + " - Gold Blocks will prevent mobs from spawning nearby.");
         if ( config.getBoolean("diamondenabler", diamondEnabler) )
-        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");  
+        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");
+        if ( config.getBoolean("monstersonly", true))
+        	log.info(plugName + " - will now only block monsters.");
         
         whitelistmobs.addAll(config.getStringList("whitelistmobs", whitelist));
         if ( whitelistmobs.size() > 0 ) {
-        	log.info(plugName + " - Imported mob whitelist"); 
+        	log.info(plugName + " - Imported mob whitelist: " + whitelistmobs.toString()); 
         } 
         
         blacklistmobs.addAll(config.getStringList("blacklistmobs", blacklist));
         if ( blacklistmobs.size() > 0 ){
-        	log.info(plugName + " - Imported mob blacklist");
+        	log.info(plugName + " - Imported mob blacklist: " + blacklistmobs.toString() );
         } 
         
     	
