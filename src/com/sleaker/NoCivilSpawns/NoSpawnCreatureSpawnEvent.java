@@ -42,9 +42,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
 		
-		if (NoCivilSpawns.monstersonly && !event.getCreatureType().getName().equals("Monster") ) 
-			return;
-		
+				
 		if (NoCivilSpawns.whitelistmobs.contains(event.getCreatureType().getName()) )
 			return;
 		
@@ -53,7 +51,6 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 			return;
 		}
 				
-
 
 			
 		if ( NoCivilSpawns.diamondEnabler )

@@ -8,6 +8,8 @@ package com.sleaker.NoCivilSpawns;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +31,8 @@ public class NoCivilSpawns extends JavaPlugin{
 	static final String plugName = "[NoCivilSpawns]";
 	private static List<String> whitelist;
 	private static List<String> blacklist;
-	private Configuration config;
+	private static List<String> creatures = new ArrayList<String>(Arrays.asList("Wolf", "Chicken", "Cow", "Pig", "Sheep")) ;
+ 	private Configuration config;
 	static Set<String> whitelistmobs = new HashSet<String>(); 
 	static Set<String> blacklistmobs = new HashSet<String>();
 	
@@ -76,7 +79,8 @@ public class NoCivilSpawns extends JavaPlugin{
         if ( config.getBoolean("diamondenabler", diamondEnabler) )
         	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");
         if ( config.getBoolean("monstersonly", true))
-        	log.info(plugName + " - will now only block monsters.");
+        	whitelistmobs.addAll(creatures);
+        
         
         whitelistmobs.addAll(config.getStringList("whitelistmobs", whitelist));
         if ( whitelistmobs.size() > 0 ) {
