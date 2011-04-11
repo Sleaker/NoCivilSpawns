@@ -18,8 +18,8 @@ goldblocker: true/false - Enables immediate cancelation if one gold block is fou
 quicktest: true/false - Enables 1 block radius quick test that will cancel the spawn if the creature is attempting to spawn on cobble, woodplank, glass, or brick.
 monstersonly: true/false - Disables detection for non-monsters. (Same effect as adding all non-monsters to the whitelist)
 whitelist:
-    - WOLF
+    - Wolf
 blacklist:
-    - PIG
-    - CHICKEN
+    - Pig
+    - Chicken
 
