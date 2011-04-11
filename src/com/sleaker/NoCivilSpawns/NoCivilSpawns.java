@@ -8,6 +8,7 @@ package com.sleaker.NoCivilSpawns;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
@@ -23,6 +24,8 @@ public class NoCivilSpawns extends JavaPlugin{
 	static final Boolean goldBlocker = false;
 	static final Boolean diamondEnabler = false;
 	static final String plugName = "[NoCivilSpawns]";
+	static List<String> whitelist;
+	static List<String> blacklist;
 	private Configuration config;
 	
 	public static Logger log = Logger.getLogger("Minecraft");
@@ -50,11 +53,13 @@ public class NoCivilSpawns extends JavaPlugin{
         
         
         config = getConfiguration();
-      //Attempt to load in the configuration file.
+       //Attempt to load in the data from the configuration file.
         if ( config.getKeys(null).isEmpty() ) {
         	config.setProperty("quicktest", true);
         	config.setProperty("goldblocker", false);
         	config.setProperty("daimondenabler", false);
+        	config.setProperty("whitelistmobs", null);
+        	config.setProperty("blacklistmobs", null);
         	log.info(plugName + " - No configuration file found. Generating defaults.");
         	config.save();
         }
@@ -63,7 +68,11 @@ public class NoCivilSpawns extends JavaPlugin{
         if ( config.getBoolean("goldblocker", goldBlocker) )
         	log.info(plugName + " - Gold Blocks will prevent mobs from spawning nearby.");
         if ( config.getBoolean("diamondenabler", diamondEnabler) )
-        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn.");       
+        	log.info(plugName + " - Diamond blocks will always allow mobs to spawn nearby.");       
+        if ( config.getStringList("whitelistmobs", whitelist) != null )
+        	log.info(plugName + " - Imported mob whitelist");       
+        if ( config.getStringList("blacklistmobs", blacklist) != null )
+        	log.info(plugName + " - Imported mob blacklist");
         
 		//Create the pluginmanager pm.
 		PluginManager pm = getServer().getPluginManager();
