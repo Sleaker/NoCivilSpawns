@@ -64,47 +64,8 @@ public class NoCivilSpawns extends JavaPlugin{
 		List<World> worlds = getServer().getWorlds();
 
 		for ( World world : worlds)
-		{
-			String worldName = world.getName();
-			worldConfig.put(worldName, new WorldSpawnConfiguration());
-			if ( !config.getKeys(null).contains(worldName) ) {	
-				NoSpawnWorldLoadEvent.setConfigDefaults(worldName);
-				log.info(NoCivilSpawns.plugName + " - Generating defaults for " + worldName);	
-			}
-			else if ( !config.getKeys(null).contains(worldName) ) {
-				NoSpawnWorldLoadEvent.setConfigDefaults(worldName);
-				log.info(plugName + " - Generating defaults for " + worldName);	
-			}
-			String enabledString = " - Enabled options for " + worldName + ":";
-			
+			setupWorld(world.getName());
 
-			WorldSpawnConfiguration conf = worldConfig.get(worldName);
-			if ( config.getBoolean(worldName+".quicktest", conf.getQuick()) )
-				enabledString += " QuickTest";	
-
-			if ( config.getBoolean(worldName+".goldblocker", conf.getGoldBlocker()) )	
-				enabledString += " GoldBlocker";
-
-			if (config.getBoolean(worldName+".ironblocker", conf.getIronBlocker()) )
-				enabledString += " IronBlocker";
-
-			if ( config.getBoolean(worldName+".diamondenabler", conf.getDiamondEnabler()) )
-				enabledString += " DiamondEnabler";
-
-			if ( config.getBoolean(worldName+".monstersonly", conf.getMonstersOnly()) )
-				conf.getWhitelistMobs().addAll(creatures);
-
-			conf.getWhitelistMobs().addAll(config.getStringList(worldName+".whitelistmobs", whitelist));
-			conf.getBlacklistMobs().addAll(config.getStringList(worldName+".blacklistmobs", blacklist));
-
-			if ( conf.getWhitelistMobs().size() > 0 ) 
-				log.info(plugName + " - Whitelisted mobs on " + worldName + ": " + conf.getWhitelistMobs().toString()); 
-
-			if ( conf.getBlacklistMobs().size() > 0 )
-				log.info(plugName + " - Blacklisted mobs on " + worldName + ": " + conf.getBlacklistMobs().toString() );
-
-			log.info(plugName + enabledString);
-		}
 		//Create the pluginmanager pm.
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CREATURE_SPAWN, spawnListener, Priority.Normal, this);
@@ -117,6 +78,60 @@ public class NoCivilSpawns extends JavaPlugin{
 
 	}
 
+	public static void setupWorld (String worldName) {
+
+		worldConfig.put(worldName, new WorldSpawnConfiguration());
+		if ( !config.getKeys(null).contains(worldName) ) {	
+			setConfigDefaults(worldName);
+			log.info(plugName + " " + worldName + " - Generating defaults.");	
+		}
+		else if ( !config.getKeys(null).contains(worldName) ) {
+			setConfigDefaults(worldName);
+			log.info(plugName + " " + worldName + " - Generating defaults.");	
+		}
+		String enabledString = " " + worldName + " - Enabled options: ";
+
+		WorldSpawnConfiguration conf = worldConfig.get(worldName);
+		if ( config.getBoolean(worldName+".quicktest", conf.getQuick()) )
+			enabledString += " QuickTest";	
+
+		if ( config.getBoolean(worldName+".goldblocker", conf.getGoldBlocker()) )	
+			enabledString += " GoldBlocker";
+
+		if (config.getBoolean(worldName+".ironblocker", conf.getIronBlocker()) )
+			enabledString += " IronBlocker";
+
+		if ( config.getBoolean(worldName+".diamondenabler", conf.getDiamondEnabler()) )
+			enabledString += " DiamondEnabler";
+
+		if ( config.getBoolean(worldName+".monstersonly", conf.getMonstersOnly()) )
+			conf.getWhitelistMobs().addAll(creatures);
+
+		conf.getWhitelistMobs().addAll(config.getStringList(worldName+".whitelistmobs", whitelist));
+		conf.getBlacklistMobs().addAll(config.getStringList(worldName+".blacklistmobs", blacklist));
+
+		if ( conf.getWhitelistMobs().size() > 0 ) 
+			log.info(plugName + " - Whitelisted mobs on " + worldName + ": " + conf.getWhitelistMobs().toString()); 
+
+		if ( conf.getBlacklistMobs().size() > 0 )
+			log.info(plugName + " - Blacklisted mobs on " + worldName + ": " + conf.getBlacklistMobs().toString() );
+
+		log.info(plugName + enabledString);
+	}
+
+	public static void setConfigDefaults (String worldName) {
+
+		config.setProperty(worldName+".quicktest", true);
+		config.setProperty(worldName+".goldblocker", false);
+		config.setProperty(worldName+".ironblocker", false);
+		config.setProperty(worldName+".diamondenabler", false);
+		config.setProperty(worldName+".monstersonly", false);
+		config.setProperty(worldName+".whitelistmobs", null);
+		config.setProperty(worldName+".blacklistmobs", null);
+		config.save();
+
+		return;
+	}
 
 
 }
