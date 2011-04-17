@@ -27,8 +27,8 @@ public class NoCivilSpawns extends JavaPlugin{
 	private final NoSpawnCreatureSpawnEvent spawnListener = new NoSpawnCreatureSpawnEvent(this);
 	private final NoSpawnWorldLoadEvent worldLoadListener = new NoSpawnWorldLoadEvent(this);
 	public static HashMap<String, WorldSpawnConfiguration> worldConfig = new HashMap<String, WorldSpawnConfiguration>();
-	static List<String> whitelist;
-	static List<String> blacklist;
+	static List<String> whiteList;
+	static List<String> blackList;
 	static List<String> creatures = new ArrayList<String>(Arrays.asList("Wolf", "Chicken", "Cow", "Pig", "Sheep")) ;
 	static final String plugName = "[NoCivilSpawns]";
 	static Configuration config;
@@ -79,7 +79,8 @@ public class NoCivilSpawns extends JavaPlugin{
 	}
 
 	public static void setupWorld (String worldName) {
-
+		final Boolean temp = false;
+		
 		worldConfig.put(worldName, new WorldSpawnConfiguration());
 		if ( !config.getKeys(null).contains(worldName) ) {	
 			setConfigDefaults(worldName);
@@ -92,23 +93,33 @@ public class NoCivilSpawns extends JavaPlugin{
 		String enabledString = " " + worldName + " - Enabled options: ";
 
 		WorldSpawnConfiguration conf = worldConfig.get(worldName);
-		if ( config.getBoolean(worldName+".quicktest", conf.getQuick()) )
+		if ( config.getBoolean(worldName+".quickTest", temp) ) {
 			enabledString += " QuickTest";	
-
-		if ( config.getBoolean(worldName+".goldblocker", conf.getGoldBlocker()) )	
+			conf.setQuickTest(true);
+		}
+			
+		if ( config.getBoolean(worldName+".goldBlocker", temp) )	{
 			enabledString += " GoldBlocker";
+			conf.setGoldBlocker(true);
+		}
 
-		if (config.getBoolean(worldName+".ironblocker", conf.getIronBlocker()) )
+		if (config.getBoolean(worldName+".ironBlocker", temp) ) {
 			enabledString += " IronBlocker";
+			conf.setIronBlocker(true);
+		}
 
-		if ( config.getBoolean(worldName+".diamondenabler", conf.getDiamondEnabler()) )
+		if ( config.getBoolean(worldName+".diamondEnabler", temp) ) {
 			enabledString += " DiamondEnabler";
+			conf.setDiamondEnabler(true);
+		}
 
-		if ( config.getBoolean(worldName+".monstersonly", conf.getMonstersOnly()) )
+		if ( config.getBoolean(worldName+".monstersOnly", temp) ) {
 			conf.getWhitelistMobs().addAll(creatures);
+			conf.setMonstersOnly(true);
+		}
 
-		conf.getWhitelistMobs().addAll(config.getStringList(worldName+".whitelistmobs", whitelist));
-		conf.getBlacklistMobs().addAll(config.getStringList(worldName+".blacklistmobs", blacklist));
+		conf.getWhitelistMobs().addAll(config.getStringList(worldName+".whitelistMobs", whiteList));
+		conf.getBlacklistMobs().addAll(config.getStringList(worldName+".blacklistMobs", blackList));
 
 		if ( conf.getWhitelistMobs().size() > 0 ) 
 			log.info(plugName + " - Whitelisted mobs on " + worldName + ": " + conf.getWhitelistMobs().toString()); 
@@ -121,13 +132,13 @@ public class NoCivilSpawns extends JavaPlugin{
 
 	public static void setConfigDefaults (String worldName) {
 
-		config.setProperty(worldName+".quicktest", true);
-		config.setProperty(worldName+".goldblocker", false);
-		config.setProperty(worldName+".ironblocker", false);
-		config.setProperty(worldName+".diamondenabler", false);
-		config.setProperty(worldName+".monstersonly", false);
-		config.setProperty(worldName+".whitelistmobs", null);
-		config.setProperty(worldName+".blacklistmobs", null);
+		config.setProperty(worldName+".quickTest", true);
+		config.setProperty(worldName+".goldBlocker", false);
+		config.setProperty(worldName+".ironBlocker", false);
+		config.setProperty(worldName+".diamondEnabler", false);
+		config.setProperty(worldName+".monstersOnly", false);
+		config.setProperty(worldName+".whitelistMobs", null);
+		config.setProperty(worldName+".blacklistMobs", null);
 		config.save();
 
 		return;
