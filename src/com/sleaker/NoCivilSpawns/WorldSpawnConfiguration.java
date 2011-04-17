@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class WorldSpawnConfiguration {
-	private Boolean quick = true;
+	private Boolean quickTest = true;
 	private Boolean goldBlocker = false;
 	private Boolean ironBlocker = false;
 	private Boolean diamondEnabler = false;
@@ -30,10 +30,14 @@ public class WorldSpawnConfiguration {
 	}
 
 
-	public Boolean getQuick() {
-		return quick;
+	public Boolean getQuickTest() {
+		return quickTest;
 	}
 
+	public void setQuickTest(Boolean quickTest) {
+		this.quickTest = quickTest;
+	}
+	
 	public void setGoldBlocker(Boolean goldBlocker) {
 		this.goldBlocker = goldBlocker;
 	}
@@ -41,9 +45,17 @@ public class WorldSpawnConfiguration {
 	public Boolean getGoldBlocker() {
 		return goldBlocker;
 	}
+	
+	public void setIronBlocker(Boolean ironBlocker) {
+		this.ironBlocker = ironBlocker;
+	}
 
 	public Boolean getIronBlocker() {
 		return ironBlocker;
+	}
+	
+	public void setDiamondEnabler(Boolean diamondEnabler) {
+		this.diamondEnabler = diamondEnabler;
 	}
 
 	public Boolean getDiamondEnabler() {
@@ -56,6 +68,10 @@ public class WorldSpawnConfiguration {
 
 	public Boolean getMonstersOnly() {
 		return monstersOnly;
+	}
+
+	public void setMonstersOnly(Boolean monstersOnly) {
+		this.monstersOnly = monstersOnly;
 	}
 
 	public Set<String> getBlacklistMobs() {
@@ -73,5 +89,6 @@ public class WorldSpawnConfiguration {
 	public static Set<Integer> getBlacklistids() {
 		return blacklistIds;
 	}
+
 
 }
