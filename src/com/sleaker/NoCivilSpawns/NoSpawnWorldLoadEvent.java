@@ -15,8 +15,7 @@ public class NoSpawnWorldLoadEvent extends WorldListener{
 
 	}
 
-	public void onWorldLoad(WorldLoadEvent event){
-
+	public void onWorldLoad(WorldLoadEvent event) {
 		NoCivilSpawns.setupWorld(event.getWorld().getName());
 	}
 

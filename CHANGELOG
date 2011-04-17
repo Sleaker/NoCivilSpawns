@@ -1,5 +1,7 @@
 1.4.0
 Added Multiworld configuration support.
+Built against latest 680 craftBukkit.
+Fixed some options not being read from file properly.
 
 1.3.3
 Fixed monstersonly - it will now automatically add all non-monsters to the whitelist (and print them out to console)

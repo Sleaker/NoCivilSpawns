@@ -14,11 +14,11 @@ Installation:
  
 Configuration Example:
 
-diamondenabler: true/false - Enables diamond blocks to act like mob spawners during block detection.
-goldblocker: true/false - Enables immediate cancelation if one gold block is found during quick/long tests.
-ironblocker: true/false - same as goldblocker, but with iron blocks.
-quicktest: true/false - Enables 1 block radius quick test that will cancel the spawn if the creature is attempting to spawn on cobble, woodplank, glass, or brick.
-monstersonly: true/false - Disables detection for non-monsters. (Same effect as adding all non-monsters to the whitelist).
+diamondEnabler: true/false - Enables diamond blocks to act like mob spawners during block detection.
+goldBlocker: true/false - Enables immediate cancelation if one gold block is found during quick/long tests.
+ironBlocker: true/false - same as goldblocker, but with iron blocks.
+quickTest: true/false - Enables 1 block radius quick test that will cancel the spawn if the creature is attempting to spawn on cobble, woodplank, glass, or brick.
+monstersOnly: true/false - Disables detection for non-monsters. (Same effect as adding all non-monsters to the whitelist).
 whitelist:
     - Wolf
 blacklist:
