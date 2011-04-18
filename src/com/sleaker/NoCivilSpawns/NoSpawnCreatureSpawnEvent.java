@@ -101,8 +101,9 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 						if (count >= max)
 							return true;
 					}					
-					if ( (conf.getGoldBlocker() || conf.getIronBlocker() ) && blockerIds.contains(blockId) ) 
+					if ( (conf.getGoldBlocker() || conf.getIronBlocker() ) && blockerIds.contains(blockId) )  {
 						return true;
+					}
 				}
 			}
 		}

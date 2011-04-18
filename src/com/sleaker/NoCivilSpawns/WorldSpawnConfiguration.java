@@ -13,7 +13,7 @@ public class WorldSpawnConfiguration {
 	private Set<String> blacklistMobs = new HashSet<String>();
 	private Set<Integer> blockedIds = makeSet ( new int[] {4, 5, 20, 45} );
 	private Set<Integer> spawnOkIds = makeSet( new int[] {52} );
-	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 22, 35, 43, 44, 45, 53, 54, 60, 62, 64, 65, 67, 85} );
+	private static final Set<Integer> blacklistIds = makeSet( new int[] {4, 5, 20, 22, 35, 43, 44, 45, 53, 54, 62, 64, 65, 67, 85} );
 
 
 
