@@ -1,3 +1,7 @@
+1.4.2
+Configuration added to allow custom cube size for the main spawn checker - use with care. setting this too high can cause adverse effects to the server.
+Built against 733
+
 1.4.1
 Added Wood Steps and Lapiz blocks to main manufactured check.
 
