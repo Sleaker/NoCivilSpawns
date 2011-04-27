@@ -80,6 +80,7 @@ public class NoCivilSpawns extends JavaPlugin{
 
 	public static void setupWorld (String worldName) {
 		final Boolean temp = false;
+		int tempInt = 0;
 		
 		worldConfig.put(worldName, new WorldSpawnConfiguration());
 		if ( !config.getKeys(null).contains(worldName) ) {	
@@ -117,7 +118,29 @@ public class NoCivilSpawns extends JavaPlugin{
 			conf.getWhitelistMobs().addAll(creatures);
 			conf.setMonstersOnly(true);
 		}
-
+		
+		config.getInt(worldName+".cubeRadius", tempInt);
+		if (tempInt == 0) {
+			config.setProperty(worldName+".cubeRadius", 10);
+			config.save();
+			conf.setRadius(10);
+		}
+		else
+			conf.setRadius(tempInt);
+		
+		tempInt = 0;
+		
+		config.getInt(worldName+".cubeHeight", tempInt);
+		if (tempInt == 0) {
+			config.setProperty(worldName+".cubeHeight", 5);
+			config.save();
+			conf.setHeight(5);
+		}
+		else
+			conf.setHeight(tempInt);
+		
+		tempInt = 0;
+		
 		conf.getWhitelistMobs().addAll(config.getStringList(worldName+".whitelistMobs", whiteList));
 		conf.getBlacklistMobs().addAll(config.getStringList(worldName+".blacklistMobs", blackList));
 
@@ -139,6 +162,8 @@ public class NoCivilSpawns extends JavaPlugin{
 		config.setProperty(worldName+".monstersOnly", false);
 		config.setProperty(worldName+".whitelistMobs", null);
 		config.setProperty(worldName+".blacklistMobs", null);
+		config.setProperty(worldName+".cubeRadius", 10);
+		config.setProperty(worldName+".cubeHeight", 5);
 		config.save();
 
 		return;

@@ -2,8 +2,11 @@ package com.sleaker.NoCivilSpawns;
 
 
 import org.bukkit.event.world.WorldListener;
-import org.bukkit.event.world.WorldLoadEvent;
 
+import org.bukkit.event.world.WorldLoadEvent;
+/*
+ * Detects when a new world is loaded in and runs the configuration loader for the world.
+ */
 
 public class NoSpawnWorldLoadEvent extends WorldListener{
 
@@ -12,7 +15,6 @@ public class NoSpawnWorldLoadEvent extends WorldListener{
 
 	public NoSpawnWorldLoadEvent(NoCivilSpawns instance) {
 		plugin = instance;
-
 	}
 
 	public void onWorldLoad(WorldLoadEvent event) {
