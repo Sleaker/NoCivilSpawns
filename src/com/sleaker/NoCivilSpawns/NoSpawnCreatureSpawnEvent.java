@@ -72,19 +72,22 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 
 		//Test to make sure we aren't spawning on a tree or too close to one. for sure (wood blocks.)
 		if (testCuboid(4, 2, -2, 0, treeIds, spawnLocation, conf)) {
-			//NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Canceled Spawn - Attempted Tree Spawn");
+			//Debug Code - NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Canceled Spawn - Attempted Tree Spawn");
 			event.setCancelled(true);
 			return;
 		}
-
-		if (testCuboid(15, 10, -2, 3, WorldSpawnConfiguration.getBlacklistids(), spawnLocation, conf)) {
-			//NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Canceled Spawn - Too close to civilization");
+		// figure out how low we need to check the spawn.
+		int minY = (int) Math.floor(conf.getHeight() / 2);
+		int maxY = conf.getHeight() - minY;
+		//The main cube tester.
+		if (testCuboid(15, conf.getRadius(), -minY, maxY, WorldSpawnConfiguration.getBlacklistids(), spawnLocation, conf)) {
+			//Debug code - NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - Canceled Spawn - Too close to civilization");
 			event.setCancelled(true);
 			return;
 		}
 	}
 
-
+// Cube Testing member - checks all blocks of a set BLOCKIDS until MAX number is found within a RADIUS, from MINY to MAXY, around the location of a BLOCKLOC.
 	public static final boolean testCuboid(int max, int radius, int minY, int maxY, Set<Integer> blockIds, Location blockloc, WorldSpawnConfiguration conf) {
 		final World world = blockloc.getWorld();
 		final int blockX = blockloc.getBlockX();
