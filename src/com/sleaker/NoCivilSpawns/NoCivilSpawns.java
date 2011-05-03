@@ -87,10 +87,7 @@ public class NoCivilSpawns extends JavaPlugin{
 			setConfigDefaults(worldName);
 			log.info(plugName + " " + worldName + " - Generating defaults.");	
 		}
-		else if ( !config.getKeys(null).contains(worldName) ) {
-			setConfigDefaults(worldName);
-			log.info(plugName + " " + worldName + " - Generating defaults.");	
-		}
+		
 		String enabledString = " " + worldName + " - Enabled options: ";
 
 		WorldSpawnConfiguration conf = worldConfig.get(worldName);
