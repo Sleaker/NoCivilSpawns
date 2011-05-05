@@ -29,7 +29,8 @@ public class NoCivilSpawns extends JavaPlugin{
 	public static HashMap<String, WorldSpawnConfiguration> worldConfig = new HashMap<String, WorldSpawnConfiguration>();
 	static List<String> whiteList;
 	static List<String> blackList;
-	static List<String> creatures = new ArrayList<String>(Arrays.asList("Wolf", "Chicken", "Cow", "Pig", "Sheep")) ;
+	static List<String> creatures = new ArrayList<String>(Arrays.asList("Wolf", "Chicken", "Cow", "Pig", "Sheep"));
+	static List<String> monsters = new ArrayList<String>(Arrays.asList("Spider", "PigZombie", "Zombie", "Skeleton", "Giant", "Ghast", "Squid", "Slime", "Creeper"));
 	static final String plugName = "[NoCivilSpawns]";
 	static Configuration config;
 
@@ -89,8 +90,21 @@ public class NoCivilSpawns extends JavaPlugin{
 		}
 		
 		String enabledString = " " + worldName + " - Enabled options: ";
-
 		WorldSpawnConfiguration conf = worldConfig.get(worldName);
+		if ( !config.getBoolean(worldName+".enabled", temp)) {
+			conf.getWhitelistMobs().addAll(monsters);
+			conf.getWhitelistMobs().addAll(creatures);
+			conf.setQuickTest(false);
+			conf.setHeight(7);
+			conf.setGoldBlocker(false);
+			conf.setIronBlocker(false);
+			conf.setMonstersOnly(false);
+			conf.setRadius(10);
+			conf.setDiamondEnabler(false);
+			log.info(plugName + " Mob blocking will be disabled for: " + worldName);
+			return;
+		}
+		
 		if ( config.getBoolean(worldName+".quickTest", temp) ) {
 			enabledString += " QuickTest";	
 			conf.setQuickTest(true);
@@ -152,6 +166,7 @@ public class NoCivilSpawns extends JavaPlugin{
 
 	public static void setConfigDefaults (String worldName) {
 
+		config.setProperty(worldName+".enabled", true);
 		config.setProperty(worldName+".quickTest", true);
 		config.setProperty(worldName+".goldBlocker", false);
 		config.setProperty(worldName+".ironBlocker", false);

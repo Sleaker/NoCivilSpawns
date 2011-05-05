@@ -26,13 +26,16 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	private static final int ironId = 42;
 
 
-
 	public NoSpawnCreatureSpawnEvent(NoCivilSpawns instance) {
 		plugin = instance;
 	}
 
 
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
+
+		//Ignore the event if it's null - possible fix for null NPE when getting event location?
+		if (event.equals(null))
+			return;
 
 		//gets the block at the location of spawn
 		Location spawnLocation = event.getLocation();
@@ -43,6 +46,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 			return;
 
 		if (conf.getBlacklistMobs().contains(event.getCreatureType().getName()) ) {
+			NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - canceled spawn for " + event.getCreatureType().getName());
 			event.setCancelled(true);
 			return;
 		}
@@ -87,7 +91,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 		}
 	}
 
-// Cube Testing member - checks all blocks of a set BLOCKIDS until MAX number is found within a RADIUS, from MINY to MAXY, around the location of a BLOCKLOC.
+	// Cube Testing member - checks all blocks of a set BLOCKIDS until MAX number is found within a RADIUS, from MINY to MAXY, around the location of a BLOCKLOC.
 	public static final boolean testCuboid(int max, int radius, int minY, int maxY, Set<Integer> blockIds, Location blockloc, WorldSpawnConfiguration conf) {
 		final World world = blockloc.getWorld();
 		final int blockX = blockloc.getBlockX();

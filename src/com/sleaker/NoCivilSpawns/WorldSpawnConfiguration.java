@@ -6,6 +6,7 @@ import java.util.Set;
  * Class to hold per-world configuration.  This class is instantiated when a new node is detected at the root of the config.yml (Denoting a configuration for a world)
  */
 public class WorldSpawnConfiguration {
+	private Boolean enabled = true;
 	private Boolean quickTest = true;
 	private Boolean goldBlocker = false;
 	private Boolean ironBlocker = false;
@@ -108,6 +109,14 @@ public class WorldSpawnConfiguration {
 
 	public static Set<Integer> getBlacklistids() {
 		return blacklistIds;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 
