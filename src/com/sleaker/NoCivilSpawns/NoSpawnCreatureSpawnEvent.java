@@ -34,7 +34,7 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
 
 		//Ignore the event if it's null - possible fix for null NPE when getting event location?
-		if (event.equals(null))
+		if (event.equals(null) || event.getLocation().getWorld().equals(null) )
 			return;
 
 		//gets the block at the location of spawn
