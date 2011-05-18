@@ -136,25 +136,21 @@ public class NoCivilSpawns extends JavaPlugin{
             conf.setMonstersOnly(true);
         }
 
-        config.getInt(worldName+".cubeRadius", tempInt);
-        if (tempInt == 0) {
+        if (config.getInt(worldName+".cubeRadius", tempInt) == 0) {
             config.setProperty(worldName+".cubeRadius", 10);
             config.save();
             conf.setRadius(10);
         }
         else
-            conf.setRadius(tempInt);
+            conf.setRadius(config.getInt(worldName+".cubeRadius", 10));
 
-        tempInt = 0;
-
-        config.getInt(worldName+".cubeHeight", tempInt);
-        if (tempInt == 0) {
+        if (config.getInt(worldName+".cubeHeight", tempInt) == 0) {
             config.setProperty(worldName+".cubeHeight", 7);
             config.save();
-            conf.setHeight(5);
+            conf.setHeight(7);
         }
         else
-            conf.setHeight(tempInt);
+            conf.setHeight(config.getInt(worldName+".cubeHeight", 7));
 
         tempInt = 0;
 
