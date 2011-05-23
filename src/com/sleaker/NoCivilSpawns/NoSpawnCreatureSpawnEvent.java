@@ -46,7 +46,6 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 			return;
 
 		if (conf.getBlacklistMobs().contains(event.getCreatureType().getName()) ) {
-			NoCivilSpawns.log.info(NoCivilSpawns.plugName + " - canceled spawn for " + event.getCreatureType().getName());
 			event.setCancelled(true);
 			return;
 		}
