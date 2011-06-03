@@ -1,3 +1,6 @@
+1.4.5
+Fix for possible NPE when whitelist/blacklist contain no records
+
 1.4.4
 Fixed logging of blacklisted mobs - Woops!
 
