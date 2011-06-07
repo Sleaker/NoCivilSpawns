@@ -8,8 +8,10 @@ package com.sleaker.NoCivilSpawns;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +28,7 @@ import org.bukkit.util.config.Configuration;
 public class NoCivilSpawns extends JavaPlugin{
     private final NoSpawnCreatureSpawnEvent spawnListener = new NoSpawnCreatureSpawnEvent(this);
     private final NoSpawnWorldLoadEvent worldLoadListener = new NoSpawnWorldLoadEvent(this);
-    public static HashMap<String, WorldSpawnConfiguration> worldConfig = new HashMap<String, WorldSpawnConfiguration>();
+    public static Map<String, WorldSpawnConfiguration> worldConfig = Collections.synchronizedMap(new HashMap<String, WorldSpawnConfiguration>());
     static List<String> whiteList;
     static List<String> blackList;
     static List<String> creatures = new ArrayList<String>(Arrays.asList("Wolf", "Chicken", "Cow", "Pig", "Sheep"));
