@@ -39,13 +39,18 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
 
         //gets the block at the location of spawn
         Location spawnLocation = event.getLocation();
-
-        WorldSpawnConfiguration conf = NoCivilSpawns.worldConfig.get(event.getLocation().getWorld().getName());
-
-        if (!conf.getWhitelistMobs().isEmpty()) {
-            if (conf.getWhitelistMobs().contains(event.getCreatureType().getName()) )
-                return;
+        
+        WorldSpawnConfiguration conf = NoCivilSpawns.worldConfig.get(spawnLocation.getWorld().getName());
+        
+        //Make sure we have a configuration stored in the map for the world that has loaded, why didn't we load a config yet?
+        if (conf.equals(null)) {
+            return;
         }
+        
+        if (conf.getWhitelistMobs().contains(event.getCreatureType().getName()) ) {
+                return;
+        } 
+
 
         if (!conf.getBlacklistMobs().isEmpty()) {
             if (conf.getBlacklistMobs().contains(event.getCreatureType().getName()) ) {
