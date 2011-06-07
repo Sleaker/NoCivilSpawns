@@ -1,6 +1,6 @@
 name: NoCivilSpawns
 main: com.sleaker.NoCivilSpawns.NoCivilSpawns
-version: 1.4.5
+version: 1.4.6
 author: Sleaker
 description: >
              A plugin that cancels mob spawn events if they occur

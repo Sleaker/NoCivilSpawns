@@ -1,3 +1,6 @@
+1.4.6
+Fix for NPEs on spawn events before bukkit properly loads plugin fully.
+
 1.4.5
 Fix for possible NPE when whitelist/blacklist contain no records
 
