@@ -14,6 +14,7 @@ import java.util.Set;
 import org.bukkit.World;
 import org.bukkit.Location;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityListener;
 
 
@@ -34,9 +35,12 @@ public class NoSpawnCreatureSpawnEvent extends EntityListener {
     public void onCreatureSpawn(CreatureSpawnEvent event) {
 
         //Ignore the event if it's null - possible fix for null NPE when getting event location?
-        if (event.equals(null) || event.getLocation().getWorld().equals(null) )
+        if (event.equals(null) || event.getLocation().getWorld().equals(null))
             return;
-
+        
+        if (!event.getSpawnReason().equals(SpawnReason.NATURAL))
+        	return;
+        
         //gets the block at the location of spawn
         Location spawnLocation = event.getLocation();
         
